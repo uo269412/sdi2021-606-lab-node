@@ -51,26 +51,6 @@ module.exports = function(app, swig) {
         res.send(respuesta);
     });
 
-    app.get('/autores', function(req, res) {
-        let respuesta = ""
-        if (Object.keys(req.body.nombre).length === 0) {
-            respuesta +="Nombre no enviado en la petición" + "<br>";
-        } else {
-            respuesta +="Autor agregado: " + req.body.nombre + "<br>";
-        }
-        if (Object.keys(req.body.grupo).length === 0) {
-            respuesta +="Grupo no enviado en la petición" + "<br>";
-        } else {
-            respuesta +="Grupo agregado: " + req.body.grupo + "<br>";
-        }
-        if (Object.keys(req.body.rol).length === 0) {
-            respuesta +="Rol no enviado en la petición" + "<br>";
-        } else {
-            respuesta +=" Rol agregado: " + req.body.rol + "<br>";
-        }
-        res.send(respuesta);
-    });
-
     app.get('/autores*', function(req, res) {
    //     let respuesta;
    //     if (typeof req.query.nombre != 'undefined')
