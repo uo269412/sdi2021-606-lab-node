@@ -27,9 +27,11 @@ module.exports = function(app, swig, gestorBD) {
     });
 
     app.get('/canciones/agregar', function (req, res) {
-        let respuesta = swig.renderFile('views/bagregar.html', {
-
-        });
+        if ( req.session.usuario == null){
+            res.redirect("/tienda");
+            return;
+        }
+        let respuesta = swig.renderFile('views/bagregar.html', {});
         res.send(respuesta);
     });
 
@@ -45,7 +47,16 @@ module.exports = function(app, swig, gestorBD) {
     });
 
     app.post('/cancion', function(req, res) {
-        let cancion = { nombre : req.body.nombre, genero : req.body.genero, precio : req.body.precio }
+        if ( req.session.usuario == null){
+            res.redirect("/tienda");
+            return;
+        }
+        var cancion = {
+            nombre : req.body.nombre,
+            genero : req.body.genero,
+            precio : req.body.precio,
+            autor: req.session.usuario
+        }
         // Conectarse
         gestorBD.insertarCancion(cancion, function(id){
             if (id == null) {
