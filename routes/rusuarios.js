@@ -8,11 +8,6 @@ module.exports = function(app, swig, gestorBD) {
         res.send(respuesta);
     });
 
-    app.get("/identificarse", function(req, res) {
-        let respuesta = swig.renderFile('views/bidentificacion.html', {});
-        res.send(respuesta);
-    });
-
     app.post("/identificarse", function(req, res) {
         let seguro = app.get("crypto").createHmac('sha256', app.get('clave'))
             .update(req.body.password).digest('hex');
@@ -24,10 +19,16 @@ module.exports = function(app, swig, gestorBD) {
             if (usuarios == null || usuarios.length == 0) {
                 req.session.usuario = null;
                 res.send("No identificado: ");
-            } else { req.session.usuario = usuarios[0].email;
-                res.redirect("/tienda/");
+            } else {
+                req.session.usuario = usuarios[0].email;
+                res.redirect("/publicaciones");
             }
         });
+    });
+
+    app.get("/identificarse", function(req, res) {
+        let respuesta = swig.renderFile('views/bidentificacion.html', {});
+        res.send(respuesta);
     });
 
     app.post('/usuario', function(req, res) {
@@ -42,7 +43,7 @@ module.exports = function(app, swig, gestorBD) {
             if (id == null){
                 res.send("Error al insertar el usuario");
             } else {
-                res.send('Usuario Insertado ' + id);
+                res.redirect("/publicaciones");
             }
         });
     });
