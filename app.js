@@ -82,6 +82,9 @@ routerUsuarioAutor.use(function(req, res, next) {
         })
 });
 
+//Aplicar routerUsuarioAutor
+app.use("/cancion/modificar",routerUsuarioAutor);
+app.use("/cancion/eliminar",routerUsuarioAutor);
 app.use("/comentario/",routerUsuarioAutor);
 
 app.use(express.static('public'));
