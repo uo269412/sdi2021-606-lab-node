@@ -2,6 +2,9 @@
 let express = require('express');
 let app = express();
 
+let fs = require('fs');
+let https = require('https');
+
 var expressSession = require('express-session');
 app.use(expressSession({
     secret: 'abcdefg',
@@ -114,11 +117,22 @@ require("./routes/rcanciones.js")(app, swig, gestorBD); // (app, param1, param2,
 require("./routes/rcomentarios.js")(app, swig, gestorBD); // (app, param1, param2, etc.)
 require("./routes/rautores.js")(app, swig); // (app, param1, param2, etc.)
 
+app.use( function( err, req, res, next ) {
+    console.log("Error producido: " + err);
+    if (!res.headersSent) {
+        res.status(400);
+        res.send("Recurso no disponible");
+    }
+});
+
 app.get('/', function (req, res) {
     res.redirect('/tienda');
 })
 
 //Lanzar el servidor
-app.listen(app.get('port'), function () {
-    console.log('Servidor activo');
+https.createServer({
+    key: fs.readFileSync('certificates/alice.key'),
+    cert: fs.readFileSync('certificates/alice.crt')
+}, app).listen(app.get('port'), function() {
+    console.log("Servidor activo");
 });
