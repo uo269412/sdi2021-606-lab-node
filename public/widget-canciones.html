@@ -8,7 +8,7 @@
         <thead>
         <tr>
             <th><a onclick="ordenarPorNombre()">Nombre</a></th>
-            <th>Genero</th>
+            <th><a onclick="ordenarPorGenero()">Genero</a></th>
             <th><a onclick="ordenarPorPrecio()">Precio</a></th>
             <th class="col-md-1"></th>
         </tr>
@@ -96,6 +96,7 @@
     function widgetAgregar() {
         $( "#contenedor-principal" ).load( "widget-agregar.html");
     }
+
     var precioDsc = true;
     function ordenarPorPrecio(){
         if (precioDsc){
@@ -111,14 +112,40 @@
         precioDsc = !precioDsc; //invertir
     }
 
-
+    var cambioSentidoNombre = true;
     function ordenarPorNombre(){
         canciones.sort(function(a, b) {
-            if(a.nombre > b.nombre ) return 1;
-            if(a.nombre < b.nombre ) return -1;
-            return 0;
+            if (cambioSentidoNombre) {
+                if(a.nombre > b.nombre ) return 1;
+                if(a.nombre < b.nombre ) return -1;
+                return 0;
+            } else {
+                if(a.nombre > b.nombre ) return -1;
+                if(a.nombre < b.nombre ) return 1;
+                return 0;
+            }
+
         });
         actualizarTabla(canciones);
+        cambioSentidoNombre = !cambioSentidoNombre; //invertir
+    }
+
+    var cambioSentidoGenero = true;
+    function ordenarPorGenero(){
+        canciones.sort(function(a, b) {
+            if (cambioSentidoGenero) {
+                if(a.genero > b.genero ) return 1;
+                if(a.genero < b.genero ) return -1;
+                return 0;
+            } else {
+                if(a.genero > b.genero ) return -1;
+                if(a.genero < b.genero ) return 1;
+                return 0;
+            }
+
+        });
+        actualizarTabla(canciones);
+        cambioSentidoGenero = !cambioSentidoGenero; //invertir
     }
 
 </script>

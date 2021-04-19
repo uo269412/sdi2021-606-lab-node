@@ -177,7 +177,12 @@ app.use(express.static('public'));
 
 //Variables
 app.set('port', 8081);
-app.set('db','mongodb://admin:sdi@tiendamusica-shard-00-00.ywrsn.mongodb.net:27017,tiendamusica-shard-00-01.ywrsn.mongodb.net:27017,tiendamusica-shard-00-02.ywrsn.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-8gbctl-shard-0&authSource=admin&retryWrites=true&w=majority');
+
+var MongoClient = require('mongodb').MongoClient;
+app.set('db',"mongodb://admin:sdi@tiendamusica-shard-00-00.ywrsn.mongodb.net:27017,tiendamusica-shard-00-01.ywrsn.mongodb.net:27017,tiendamusica-shard-00-02.ywrsn.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-8gbctl-shard-0&authSource=admin&retryWrites=true&w=majority");
+
+
+
 app.set('clave','abcdefg'); app.set('crypto',crypto);
 
 //Rutas/controladores por lógica
